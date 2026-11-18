@@ -2,6 +2,14 @@
 
 一个 Python 程序同时提供页面和接口，身份与对局保存在 SQLite。无需安装 Python 包即可运行。
 
+如果目标服务器的 Python 是自行编译的，且 `python -c 'import sqlite3'` 报 `No module named '_sqlite3'`，可在虚拟环境安装 `pysqlite3-binary`；程序会自动改用该 SQLite 驱动。正常的 Python 安装不需要此依赖。目标服务器的 Gunicorn 需要另行安装。
+
+```bash
+PIP_CONFIG_FILE=/dev/null .venv/bin/python -m pip install \
+  --index-url https://mirrors.aliyun.com/pypi/simple/ pysqlite3-binary==0.5.4.post2
+.venv/bin/python -c 'import pysqlite3; print(pysqlite3.sqlite_version)'
+```
+
 ## 功能
 
 - 主持人设定玩家、狼人、平民与神职人数，并从预言家、女巫、猎人、白痴、守卫、丘比特中选择神职。每种神职最多一位。

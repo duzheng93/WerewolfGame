@@ -1,4 +1,4 @@
-"""Single-port, dependency-free Werewolf role draw service."""
+"""Single-port Werewolf role draw service."""
 
 from __future__ import annotations
 
@@ -6,7 +6,17 @@ import json
 import logging
 import os
 import secrets
-import sqlite3
+try:
+    import sqlite3
+except ModuleNotFoundError as exc:
+    if exc.name != "_sqlite3":
+        raise
+    try:
+        import pysqlite3 as sqlite3
+    except ModuleNotFoundError as fallback_exc:
+        raise RuntimeError(
+            "Python 缺少 _sqlite3；请在虚拟环境安装 pysqlite3-binary"
+        ) from fallback_exc
 from datetime import datetime, timezone
 from http import HTTPStatus
 from pathlib import Path
