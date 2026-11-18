@@ -1,0 +1,19 @@
+[Unit]
+Description=Werewolf role draw service
+After=network.target
+
+[Service]
+Type=simple
+User=werewolf
+Group=werewolf
+WorkingDirectory=/opt/werewolf
+Environment=WEREWOLF_HOST=127.0.0.1
+Environment=WEREWOLF_PORT=8000
+Environment=WEREWOLF_DB_PATH=/var/lib/werewolf/werewolf.sqlite3
+ExecStart=/usr/bin/python3 /opt/werewolf/app.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
